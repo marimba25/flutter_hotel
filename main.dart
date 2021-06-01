@@ -66,26 +66,14 @@ class MyApp extends StatelessWidget {
           )),
     );
 
-    final subLocation = GestureDetector(
-        onTap: () => {print("tada")},
-        child: Container(
-          padding: EdgeInsets.only(left: 0, bottom: 5),
-          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Icon(
-              Icons.location_on,
-              color: Colors.pink,
-              size: 30.0,
-            ),
-            Text('Sarphatistraat 104, Amsterdam',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontFamily: 'Georgia', fontSize: 18, color: Colors.white60))
-          ]),
-        ));
-
     Widget _buildList() => ListView(
           padding: const EdgeInsets.all(12),
-          children: [mainImage, subTitle, subLocation, photos],
+          children: [
+            mainImage,
+            subTitle,
+            SubLocation('Sarphatistraat 104, Amsterdam'),
+            photos
+          ],
         );
 
     return Scaffold(
@@ -101,6 +89,40 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // #enddocregion body
+    );
+  }
+}
+
+class SubLocation extends StatelessWidget {
+  String text = '';
+
+  SubLocation(String text) {
+    this.text = text;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SimpleMap()),
+        )
+      },
+      child: Container(
+        padding: EdgeInsets.only(left: 0, bottom: 5),
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Icon(
+            Icons.location_on,
+            color: Colors.pink,
+            size: 30.0,
+          ),
+          Text(this.text,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  fontFamily: 'Georgia', fontSize: 18, color: Colors.white60))
+        ]),
+      ),
     );
   }
 }
